@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-// 初始化样式
+// less样式 引入
 import './assets/styles/index.less'
 
 createApp(App).mount('#app')

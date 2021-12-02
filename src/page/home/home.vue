@@ -1,5 +1,7 @@
 <template>
-   我是vue3定义的home组件页面
+  <div class="red-box">
+   基于vue3的后台管理系统
+  </div>
 </template>
 
 <script lang="tsx">
@@ -9,3 +11,12 @@ export default defineComponent({
   name: "home"
 })
 </script>
+<style lang="less">
+.red-box {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
