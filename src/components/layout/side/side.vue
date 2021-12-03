@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <div class="page-container vh-box">
     我是side组件
   </div>
 </template>
@@ -7,7 +7,7 @@
 <script lang="tsx">
 import { defineComponent } from 'vue';
 export default defineComponent({
-  name: '',
+  name: 'side',
   components: {
 
   }
