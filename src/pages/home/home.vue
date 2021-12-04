@@ -1,16 +1,8 @@
 <template>
-  <div class="container">
-    <div class="header">
-      <Header></Header>
-    </div>
-    <div class="body">
-      <div class="side">
-        <Side></Side>
-      </div>
-      <div class="content">
-        内容区域
-      </div>
-    </div>
+  <div class="layout">
+    <header><Header></Header></header>
+    <aside><Side></Side></aside>
+    <main class="vh-box">主体内容区域</main>
   </div>
 </template>
 
@@ -27,39 +19,29 @@ export default defineComponent({
 })
 </script>
 <style lang="less" scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.layout {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  grid-template-rows:    100px 1fr;
+  grid-template-areas: "header header" "aside  main";
+  grid-gap: 10px;
   width: 100vw;
   height: 100vh;
-  .header {
+  header {
     width: 100%;
-    height: 100px;
-    background: green;
+    height: 100%;
+    grid-area: header;
   }
-  .body {
-    display: flex;
-    justify-content: space-between;
+  aside {
     width: 100%;
-    height: calc(100vh - 120px);
-    .side {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 200px;
-      height: 100%;
-      background: #fff;
-    }
-    .content {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: calc(100% - 20px);
-      width: calc(100% - 220px);
-      background: #fff;
-      margin-bottom: 20px;
-    }
+    height: 100%;
+    grid-area: aside;
+  }
+  main {
+    width: 100%;
+    height: calc(100% - 10px);
+    grid-area: main;
+    background: @bg-white;
   }
 }
 </style>
