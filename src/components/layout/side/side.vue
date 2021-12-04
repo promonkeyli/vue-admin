@@ -1,15 +1,19 @@
 <template>
-  <Home></Home>
+  <div class="page-container vh-box">
+    我是side组件
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Home from './pages/index.vue'; // 此处vue3要跟完整的文件名
-
 export default defineComponent({
-  name: 'App',
+  name: 'sideComponent',
   components: {
-    Home
   }
 });
 </script>
+
+<style scoped lang="less">
+
+
+</style>
