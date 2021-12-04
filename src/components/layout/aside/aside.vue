@@ -1,6 +1,6 @@
 <template>
   <div class="page-container vh-box">
-    我是side组件
+    我是aside组件
   </div>
 </template>
 

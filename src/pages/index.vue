@@ -15,7 +15,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Header from '@/components/layout/header/header.vue';
-import Side from '@/components/layout/side/side.vue';
+import Side from '@/components/layout/aside/aside.vue';
 import Content from './content/content.vue';
 
 export default defineComponent({
