@@ -1,20 +1,27 @@
 <template>
   <div class="layout">
-    <header><Header></Header></header>
-    <aside><Side></Side></aside>
-    <main class="vh-box">主体内容区域</main>
+    <header>
+      <Header></Header>
+    </header>
+    <aside>
+      <Side></Side>
+    </aside>
+    <main>
+      <Content></Content>
+    </main>
   </div>
 </template>
 
-<script lang="tsx">
+<script lang="ts">
 import { defineComponent } from 'vue';
-import Header from 'components/layout/header/header.vue';
-import Side from 'components/layout/side/side.vue';
+import Header from '@/components/layout/header/header.vue';
+import Side from '@/components/layout/side/side.vue';
+import Content from './content/content.vue';
 
 export default defineComponent({
-  name: "home",
+  name: "index",
   components:{
-    Header, Side
+    Header, Side, Content
   }
 })
 </script>
