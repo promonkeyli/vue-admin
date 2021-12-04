@@ -1,11 +1,16 @@
-// 公共样式
+// 多页面公共样式
 
-/*页面容器*/
 html,
 body {
   width: 100vw;
   height: 100vh;
   background: @bg-grey;
+}
+/*单独页面外部容器*/
+.single-container {
+  width: 100vw;
+  height: 100vh;
+  background: @bg-white;
 }
 /*组件外部容器*/
 .page-container {
@@ -18,4 +23,27 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+
+/*登陆/注册页面公共样式*/
+.login-bg {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../images/login/login-bg.jpg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+// 登陆/注册信息容器
+.login-box{
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  width: 35%;
+  height: 70%;
+  background: rgba(255,255,255,.8);
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px RGBA(0,0,0,.2);
+  padding: 40px;
 }

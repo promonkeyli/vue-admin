@@ -1,5 +1,5 @@
 <template>
-  <Home></Home>
+  <router-view></router-view>
 </template>
 
 <script lang="ts">
@@ -8,8 +8,6 @@ import Home from './pages/index.vue'; // 此处vue3要跟完整的文件名
 
 export default defineComponent({
   name: 'App',
-  components: {
-    Home
-  }
+  components: { Home }
 });
 </script>
