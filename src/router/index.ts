@@ -1,5 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router';
 import Index from '../pages/index.vue';
+import {localStorage} from "@/lib/tools";
 
 // 路由表配置项
 const routes = [
@@ -39,7 +40,10 @@ router.beforeEach((to, from, next) => {
     // 1. 不是前往登陆页面 且身份验证也失败 路由重定向到login页面
     // 2. 前往登陆页面 或者 身份验证成功的话 路由放行---只要身份验证成功 去往任何页面都放行
     // 3. 此处的身份认证信息需要缓存在localStorage中，在登陆成功后，保存后段返回的token以及用户信息，token失效会重新登陆获取新的token
-    if (to.name !== 'login' && to.name !== 'register') next({ name: 'login' })
+    const token = localStorage.get('token');
+    // console.log(token,'token');
+    const isAuthenticated = (token === 'token123');
+    if (to.name !== 'login' && to.name !== 'register' && !isAuthenticated) next({ name: 'login' })
     else next()
 })
 export default router
