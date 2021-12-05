@@ -62,6 +62,7 @@
 import {defineComponent, reactive, ref } from 'vue';
 import {NGrid, NForm, NFormItemGi, NInput, NButton, useMessage} from "naive-ui";
 import {UserInfo} from "@/components/login/index.type";
+import router from '@/router';
 
 export default defineComponent({
   name: 'registerComponent',
@@ -126,7 +127,8 @@ export default defineComponent({
    function signUpClick(): void {
       formRef.value.validate((errors: any) => {
         if (!errors) {
-          console.log(formData)
+        //  此处请求数据库，成功跳转登陆页面
+          router.replace({ path: '/login' })
         } else {
           const error = 'error'
           $message.warning(error);
