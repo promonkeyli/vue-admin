@@ -14,10 +14,10 @@ function setCookie(name: string , value: string, day: number): void {
     document.cookie = `${name} = ${cookieValue};expires = ${time.toUTCString()}`;
 }
 function getCookie(name: string): any {
-    let arr: any;
+    let arr: Array<any> | null;
     const reg = new RegExp(`(^|)${name}=([^;]*)(;|$)`);
     arr = document.cookie.match(reg);
-    return unescape(arr[2]);
+    return  arr ? unescape(arr[2]) : null;
 }
 function removeCookie(name: string): boolean {
     // 删除cookie说白了就是设置cookie的过期时间为过去的一个时间，即让cookie过期
@@ -31,9 +31,25 @@ function removeCookie(name: string): boolean {
         return false;
     }
 }
+function setAllCookie(username: string, password: string): void {
+    setCookie('username',username, 5);
+    setCookie('password',password, 5);
+}
+function getAllCookie(): Object {
+    const username = getCookie('username');
+    const password = getCookie('password');
+    return { username, password };
+}
+function removeAllCookie(): void{
+    removeCookie('username');
+    removeCookie('password');
+}
 
 export {
      setCookie,
      getCookie,
-     removeCookie
+     removeCookie,
+     setAllCookie,
+     getAllCookie,
+     removeAllCookie
 };
