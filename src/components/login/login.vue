@@ -125,11 +125,17 @@ export default defineComponent({
           const { username, password } = formData;
           const user = { user: { username, password }};
           login(user).then((res: any) => {
-            console.log(res);
+            const { error, message} = res.data;
+            if (error){
+              $message.error(message);
+            }else {
+            // 1。此处用户名存在 且 密码正确 根据checkbox判断是否存取密码
+            // 2.对token做数据持久化
+            // 3.提示登录成功
+            // 4.页面条状
+              $message.success('登录成功');
+            }
           })
-          // 2.根据返回值判断
-          // 2.1 登陆成功 将token保存在 localstorage中 用户名密码 得看checkbox 勾选状态
-          // 2.2 登陆失败 界面显示登陆失败信息
         } else {
           const error = 'error'
           $message.warning(error);

@@ -34,7 +34,7 @@ const router = createRouter({
  * @param   {Object}   next   放行函数
  * @return  { void }   void
  */
-router.beforeEach((to, from, next) => {
+router.beforeEach((to: any, from: any, next: any) => {
     // const isAuthenticated = true;&& !isAuthenticated
     // 此处逻辑是--vue-router 在路由发生变化时会根据条件放行路由
     // 1. 不是前往登陆页面 且身份验证也失败 路由重定向到login页面
