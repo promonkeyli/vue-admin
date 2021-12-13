@@ -103,25 +103,6 @@ export default defineComponent({
     const signInClick = (): void => {
       formRef.value.validate((errors: any) => {
         if (!errors) {
-           // 勾选记住账户名才存值 不勾选移除Cookie
-         /* isChecked.value ? setAllCookie(formData.username, formData.password) : removeAllCookie();
-          const statusError = '用户名或者密码有误，请重新输入'
-          console.log('用户信息',formData);
-          const name = 'admin';
-          const pwd = '123';
-          // 此处先根据输入的用户名密码向后段请求 失败则提示用户名密码有误
-          if ((formData.username === name)  && (formData.password === pwd )){
-          // 用户名密码都正确 返回token 并将token 用户信息保存至localStorage中
-            const token = 'token123';
-            localStorage.set('token', token);
-            localStorage.set('name', name);
-            localStorage.set('pwd', pwd);
-            console.log('router', router);
-            router.push('/')
-          }else {
-            $message.warning(statusError);
-          }*/
-          // 1.请求接口
           const { username, password } = formData;
           const user = { user: { username, password }};
           login(user).then((res: any) => {
@@ -129,11 +110,15 @@ export default defineComponent({
             if (error){
               $message.error(message);
             }else {
-            // 1。此处用户名存在 且 密码正确 根据checkbox判断是否存取密码
-            // 2.对token做数据持久化
-            // 3.提示登录成功
-            // 4.页面条状
-              $message.success('登录成功');
+              const { username, token, message } = res.data;
+              // 1.此处用户名存在 且 密码正确 根据checkbox判断是否存取密码
+              isChecked.value ? setAllCookie(formData.username, formData.password) : removeAllCookie();
+              // 2.对token做数据持久化
+              localStorage.set('token', token);
+              // 3.提示登录成功
+              $message.success(message);
+              // 4.页面跳转
+              router.push('/')
             }
           })
         } else {
