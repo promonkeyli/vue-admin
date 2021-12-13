@@ -11,30 +11,30 @@
               y-gap="1"
               :cols="1">
             <n-form-item-gi
-                label="UserName"
-                path="userName">
+                label="Username"
+                path="username">
               <n-input
                   type="text"
-                  v-model:value="formData.userName"
+                  v-model:value="formData.username"
                   @keydown.enter.prevent/>
             </n-form-item-gi>
             <n-form-item-gi
-                label="PassWord"
-                path="passWord">
+                label="Password"
+                path="password">
               <n-input
                   type="password"
-                  v-model:value="formData.passWord"
+                  v-model:value="formData.password"
                   @input="handlePasswordInput"
                   @keydown.enter.prevent/>
             </n-form-item-gi>
             <n-form-item-gi
-                label="Confirm PassWord"
-                ref="confirmPassWordRef"
-                path="confirmPassWord">
+                label="Confirm Password"
+                ref="confirmPasswordRef"
+                path="confirmPassword">
               <n-input
                   type="password"
                   @keydown.enter.prevent
-                  v-model:value="formData.confirmPassWord"/>
+                  v-model:value="formData.confirmPassword"/>
             </n-form-item-gi>
           </n-grid>
         </n-form>
@@ -63,7 +63,7 @@ import {defineComponent, reactive, ref } from 'vue';
 import {NGrid, NForm, NFormItemGi, NInput, NButton, useMessage} from "naive-ui";
 import {UserInfo} from "@/components/login/index.type";
 import router from '@/router';
-
+import { register } from '@/services/userService'
 export default defineComponent({
   name: 'registerComponent',
   components: {
@@ -72,24 +72,24 @@ export default defineComponent({
   setup(props: any, context: any){
     /*****************数据*********************/
     const formData = reactive<UserInfo>({
-      userName: '',
-      passWord: '',
-      confirmPassWord: ''
+      username: '',
+      password: '',
+      confirmPassword: ''
     })
     const formRef = ref<any>(null); // 表单ref
-    const confirmPassWordRef = ref<any>(null); // 重复密码ref
+    const confirmPasswordRef = ref<any>(null); // 重复密码ref
     const rules: Object = {
-      userName: {
+      username: {
         required: true,
         trigger: ['blur', 'input'],
         message: '请输入 用户名'
       },
-      passWord: {
+      password: {
         required: true,
         trigger: ['blur', 'input'],
         message: '请输入 密码'
       },
-      confirmPassWord: [
+      confirmPassword: [
           {
           required: true,
           trigger: ['blur', 'input'],
@@ -112,23 +112,38 @@ export default defineComponent({
     /*****************逻辑函数*********************/
     function validatePasswordStartWith (rule: any, value: any): boolean {
       return !!(
-          formData?.passWord && formData?.passWord.startsWith(value) &&
-          formData?.passWord.length >= value.length
+          formData?.password && formData?.password.startsWith(value) &&
+          formData?.password.length >= value.length
       )
     }
     function validatePasswordSame (rule: any, value: any): Boolean {
-      return value === formData.passWord
+      return value === formData.password
     }
     function handlePasswordInput () {
-      if (formRef.ConfirmPassWord) {
-        confirmPassWordRef.value.validate({ trigger: 'password-input' })
+      if (formRef.ConfirmPassword) {
+        confirmPasswordRef.value.validate({ trigger: 'password-input' })
       }
     }
-   function signUpClick(): void {
+    function signUpClick(): void {
       formRef.value.validate((errors: any) => {
         if (!errors) {
         //  此处请求数据库，成功跳转登陆页面
-          router.replace({ path: '/login' })
+        //   console.log(formData);
+          const { username, password } = formData;
+          const user = { user:{ username, password } };
+           register(user).then((res: any) => {
+             const { success } = res.data;
+             if (success){
+               $message.success('注册成功');
+               router.replace({ path: '/login' })
+             } else {
+               const { error } = res.data;
+               $message.error(error.message);
+
+             }
+
+           })
+
         } else {
           const error = 'error'
           $message.warning(error);
@@ -137,7 +152,7 @@ export default defineComponent({
     }
 
     return {
-      formData ,formRef, confirmPassWordRef, rules ,signUpClick, handlePasswordInput
+      formData ,formRef, confirmPasswordRef, rules ,signUpClick, handlePasswordInput
     }
   }
 });

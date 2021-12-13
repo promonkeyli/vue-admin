@@ -12,18 +12,18 @@
             y-gap="1"
             :cols="1">
           <n-form-item-gi
-              label="UserName"
-              path="userName">
+              label="Username"
+              path="username">
             <n-input
                 type="text"
-                v-model:value="formData.userName"/>
+                v-model:value="formData.username"/>
           </n-form-item-gi>
           <n-form-item-gi
-              label="PassWord"
-              path="passWord">
+              label="Password"
+              path="password">
             <n-input
                 type="password"
-                v-model:value="formData.passWord"/>
+                v-model:value="formData.password"/>
           </n-form-item-gi>
         </n-grid>
         </n-form>
@@ -58,6 +58,7 @@ import  sloganComponent  from './slogan.vue'
 import { setAllCookie, removeAllCookie , getAllCookie, localStorage} from '@/lib/tools'
 import { UserInfo } from './index.type';
 import { useRoute, useRouter } from 'vue-router';
+import {login} from "@/services/userService";
 
 export default defineComponent({
   name: 'loginComponent',
@@ -71,8 +72,8 @@ export default defineComponent({
          // 此处获取本地峰Cookie数据
       const [username, password] = getAllCookie();
       if (username !== null && password !== null){
-        formData.userName = username;
-        formData.passWord = password;
+        formData.username = username;
+        formData.password = password;
       }
     })
     // context 是非响应式的js对象，需要某些属性或者方法可以直接解构获取
@@ -82,16 +83,16 @@ export default defineComponent({
     const formRef = ref<any>(null);
     const $message = useMessage(); // ui自定义的hooks函数
     const formData = reactive<UserInfo>({
-      userName : '',
-      passWord : ''
+      username : '',
+      password : ''
     })
     const rules: Object = {
-        userName: {
+        username: {
           required: true,
           trigger: ['blur', 'input'],
           message: '请输入 用户名'
         },
-        passWord: {
+        password: {
           required: true,
           trigger: ['blur', 'input'],
           message: '请输入 密码'
@@ -103,13 +104,13 @@ export default defineComponent({
       formRef.value.validate((errors: any) => {
         if (!errors) {
            // 勾选记住账户名才存值 不勾选移除Cookie
-          isChecked.value ? setAllCookie(formData.userName, formData.passWord) : removeAllCookie();
+         /* isChecked.value ? setAllCookie(formData.username, formData.password) : removeAllCookie();
           const statusError = '用户名或者密码有误，请重新输入'
           console.log('用户信息',formData);
           const name = 'admin';
           const pwd = '123';
           // 此处先根据输入的用户名密码向后段请求 失败则提示用户名密码有误
-          if ((formData.userName === name)  && (formData.passWord === pwd )){
+          if ((formData.username === name)  && (formData.password === pwd )){
           // 用户名密码都正确 返回token 并将token 用户信息保存至localStorage中
             const token = 'token123';
             localStorage.set('token', token);
@@ -119,7 +120,16 @@ export default defineComponent({
             router.push('/')
           }else {
             $message.warning(statusError);
-          }
+          }*/
+          // 1.请求接口
+          const { username, password } = formData;
+          const user = { user: { username, password }};
+          login(user).then((res: any) => {
+            console.log(res);
+          })
+          // 2.根据返回值判断
+          // 2.1 登陆成功 将token保存在 localstorage中 用户名密码 得看checkbox 勾选状态
+          // 2.2 登陆失败 界面显示登陆失败信息
         } else {
           const error = 'error'
           $message.warning(error);
