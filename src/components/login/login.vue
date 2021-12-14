@@ -23,7 +23,8 @@
               path="password">
             <n-input
                 type="password"
-                v-model:value="formData.password"/>
+                v-model:value="formData.password"
+                @keydown.enter="signInClick"/>
           </n-form-item-gi>
         </n-grid>
         </n-form>
@@ -36,7 +37,8 @@
           <n-button
               class="login-button"
               type="primary"
-              @click="signInClick">
+              @click="signInClick"
+              @keydown.enter="signInClick">
             sign in
           </n-button>
         <span>Dont`t have an account ?

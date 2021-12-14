@@ -6,19 +6,28 @@ const routes = [
     {
         path: '/',
         name: 'index',
-        component: () => import('../pages/index.vue'),
+        component: () => import('../pages/index.vue')
     },
     {
         path: '/login',
         name:'login',
         // 组件按需加载
-        component: () => import('../components/login/login.vue'),
+        component: () => import('../components/login/login.vue')
     },
     {
         path: '/register',
         name:'register',
-        component: () => import('../components/login/register.vue'),
+        component: () => import('../components/login/register.vue')
     },
+    {
+        path: '/404',
+        name: '404',
+        component: () => import('../components/login/404.vue')
+    },
+    {
+        path: '/:pathMatch(.*)', // vue3路径匹配 * 调整
+        redirect: '/404'
+    }
 ]
 
 const router = createRouter({
@@ -49,7 +58,6 @@ router.beforeEach((to: any, from: any, next: any) => {
             next();
         }else {
             // 不存在 重定向 /login
-            console.log(to);
             next('login');
         }
     }
