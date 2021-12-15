@@ -4,7 +4,7 @@ import {localStorage} from "@/lib/tools";
 // 路由表配置项
 const routes = [
     {
-        path: '/',
+        path: '/index',
         name: 'index',
         component: () => import('../pages/index.vue')
     },

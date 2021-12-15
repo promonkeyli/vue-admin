@@ -1,4 +1,4 @@
-import axios from 'axios';
+import $http from './http';
 
 interface userinfo{
     user:{
@@ -7,10 +7,14 @@ interface userinfo{
     }
 }
 export function login(data: userinfo):Promise<any> {
-    const url = 'http://127.0.0.1:3000/api/user/login';
-    return axios.post(url, data);
+    const url = '/user/login';
+    return $http.post(url, data);
 }
 export function register(data: userinfo):Promise<any> {
-    const url = 'http://127.0.0.1:3000/api/user/register';
-    return axios.post(url, data);
+    const url = '/user/register';
+    return $http.post(url, data);
+}
+export function getCurrentUser(username: string): Promise<any> {
+    const url = `/user/${username}`;
+    return $http.get(url);
 }

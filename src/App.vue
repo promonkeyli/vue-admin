@@ -1,6 +1,8 @@
 <template>
   <n-message-provider>
+    <n-spin :show="show">
     <router-view></router-view>
+    </n-spin>
   </n-message-provider>
 </template>
 

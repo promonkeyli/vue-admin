@@ -14,6 +14,7 @@ import { NButton } from "naive-ui";
 import {localStorage} from "@/lib/tools";
 import {useRouter} from "vue-router";
 import { useStore } from "vuex";
+import { getCurrentUser } from "@/services/userService";
 
 export default defineComponent({
   name: 'headerComponent',
@@ -24,12 +25,13 @@ export default defineComponent({
   /*****************逻辑函数*********************/
   const router = useRouter();
   const store = useStore();
-    function logOutClick (){
+    async function logOutClick (){
     // 此处退出清除localStorage信息
     /*localStorage.remove('name');
     localStorage.remove('token');
       router.push('/login')*/
-      console.log('store', store.state);
+      const userInfo: any = await getCurrentUser('admin');
+      console.log('userInfo', userInfo);
     }
     return {
       logOutClick

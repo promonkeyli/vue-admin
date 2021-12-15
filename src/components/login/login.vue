@@ -120,7 +120,7 @@ export default defineComponent({
               // 3.提示登录成功
               $message.success(message);
               // 4.页面跳转
-              router.push('/')
+              router.push('/index')
             }
           })
         } else {
