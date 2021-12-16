@@ -108,11 +108,11 @@ export default defineComponent({
           const { username, password } = formData;
           const user = { user: { username, password }};
           login(user).then((res: any) => {
-            const { error, message} = res.data;
+            const { error, message} = res;
             if (error){
               $message.error(message);
             }else {
-              const { username, token, message } = res.data;
+              const { username, token, message } = res;
               // 1.此处用户名存在 且 密码正确 根据checkbox判断是否存取密码
               isChecked.value ? setAllCookie(formData.username, formData.password) : removeAllCookie();
               // 2.对token做数据持久化
@@ -120,7 +120,7 @@ export default defineComponent({
               // 3.提示登录成功
               $message.success(message);
               // 4.页面跳转
-              router.push('/index')
+              router.push('/')
             }
           })
         } else {

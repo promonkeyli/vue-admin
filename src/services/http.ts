@@ -5,6 +5,7 @@
  */
 import axios from 'axios';
 import router from '@/router';
+import store from '@/store/index'
 
 /*********************根据环境变量区分接口默认地址***********************/
 
@@ -37,7 +38,9 @@ axios.defaults.timeout = 15000;
 
 // 请求拦截器
 axios.interceptors.request.use(function (config: any) {
-    // 1.非登录注册页面 需要添加token请求头信息
+    // 1.请求前开启全局loading
+    store.commit('loadingChange', true);
+    // 2.非登录注册页面 需要添加token请求头信息
     const { path, name } = router.currentRoute.value;
     if (name !== 'login' && name !== 'register'){
         const token = JSON.parse(<string>localStorage.getItem('token'));
@@ -57,11 +60,20 @@ axios.interceptors.request.use(function (config: any) {
 });
 
 // 响应拦截器
-axios.interceptors.response.use(function (response: any) {
-    // 对响应数据做点什么
-    return response;
-}, function (error: any) {
-    // 对响应错误做点什么
+axios.interceptors.response.use( (response: any) => {
+        // 1.结束全局加载状态
+    store.commit('loadingChange', false);
+        // 成功响应：过滤其他数据，返回data
+        return response.data;
+}
+,  (error: any) => {
+    // 错误响应：错误的状态在error中的response中获取
+        const { response } = error;
+       // todo 此处根据错误状态写逻辑
+       /* switch (response) {
+            case '404':
+                break;
+        }*/
     return Promise.reject(error);
 });
 

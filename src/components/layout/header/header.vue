@@ -27,9 +27,9 @@ export default defineComponent({
   const store = useStore();
     async function logOutClick (){
     // 此处退出清除localStorage信息
-    /*localStorage.remove('name');
+    localStorage.remove('name');
     localStorage.remove('token');
-      router.push('/login')*/
+      await router.push('/login');
       const userInfo: any = await getCurrentUser('admin');
       console.log('userInfo', userInfo);
     }
