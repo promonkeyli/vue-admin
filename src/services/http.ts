@@ -67,13 +67,17 @@ axios.interceptors.response.use( (response: any) => {
         return response.data;
 }
 ,  (error: any) => {
-    // 错误响应：错误的状态在error中的response中获取
-        const { response } = error;
-       // todo 此处根据错误状态写逻辑
-       /* switch (response) {
-            case '404':
+        store.commit('loadingChange', false);
+        // 错误响应：错误的状态在error中的response中获取
+        const { status } = error.response;
+        switch (status) {
+            case 401:
+                // 401表示没有token 或者token过期 此时如果本地有token 就清除 同时重定向到登陆界面
+                const token = localStorage.getItem('token');
+                if (!!token){ localStorage.removeItem('token'); }
+                router.push({path: '/login'});
                 break;
-        }*/
+        }
     return Promise.reject(error);
 });
 

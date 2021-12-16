@@ -14,7 +14,7 @@ export function register(data: userinfo):Promise<any> {
     const url = '/user/register';
     return $http.post(url, data);
 }
-export function getCurrentUser(username: string): Promise<any> {
-    const url = `/user/${username}`;
+export function getCurrentUser(): Promise<any> {
+    const url = `/user`;
     return $http.get(url);
 }
